@@ -1,12 +1,20 @@
+import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
-import { config } from "dotenv";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import { connectDB } from "./config/db.js";
 
-config();
+dotenv.config();
+
 const app = express();
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({extended: true}))
+app.use(cookieParser());
 
-const port = process.env.PORT || 5050;
+const port = process.env.PORT;
+
+connectDB();
 
 app.listen(port, () => console.log("App is running on", port));
