@@ -1,7 +1,12 @@
 import express from "express";
 import { body } from "express-validator";
 
-import { createUser, getAllUsers } from "../controllers/userController.js";
+import {
+  createUser,
+  getAllUsers,
+  getUserProfile,
+  updateCurrentUser,
+} from "../controllers/userController.js";
 import { loginUser, logoutUser } from "../controllers/authController.js";
 import { authenticate, isAdmin } from "../middlewares/authentication.js";
 
@@ -19,6 +24,8 @@ router
   );
 
 router.route("/").get(authenticate, isAdmin, getAllUsers);
+router.route("/profile").get(authenticate, getUserProfile);
+router.route("/profile").put(authenticate, updateCurrentUser);
 
 router
   .route("/auth/login")

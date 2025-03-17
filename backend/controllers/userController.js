@@ -41,5 +41,55 @@ export const createUser = asyncHandler(async (req, res) => {
 });
 
 export const getAllUsers = asyncHandler(async (req, res) => {
-  res.send("get users");
+  const users = await User.find().select("-password");
+
+  res.json(users);
+});
+
+export const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User was not found");
+  }
+  res.json({
+    id: user._id,
+    email: user.email,
+    username: user.username,
+  });
+});
+
+export const updateCurrentUser = asyncHandler(async (req, res) => {
+  const body = req.body;
+
+  console.log("Update");
+
+  const userExisted = await User.findById(req.user._id);
+
+  if (!userExisted) {
+    res.status(404);
+    throw new Error("User was not found");
+  }
+
+  userExisted.username = body.username || userExisted.username;
+  userExisted.email = body.email || userExisted.email;
+  userExisted.isAdmin = body.isAdmin || userExisted.isAdmin;
+
+  if (body.password) {
+    const hashedPw = await bcrypt.hash(body.password, 12);
+    userExisted.password = hashedPw || userExisted.password;
+  }
+
+  await userExisted.save();
+
+  res.status(201).json({
+    message: "User updated successfully",
+    status: res.statusCode,
+    user: {
+      id: userExisted._id,
+      email: userExisted.email,
+      username: userExisted.username,
+    },
+  });
 });
