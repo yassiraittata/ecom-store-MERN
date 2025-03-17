@@ -3,12 +3,16 @@ import { body } from "express-validator";
 
 import {
   createUser,
-  getAllUsers,
   getUserProfile,
   updateCurrentUser,
+} from "../controllers/userController.js";
+
+import {
+  getAllUsers,
   deleteUser,
   getSingleUser,
-} from "../controllers/userController.js";
+  updateSingleUser,
+} from "../controllers/adminController.js";
 import { loginUser, logoutUser } from "../controllers/authController.js";
 import { authenticate, isAdmin } from "../middlewares/authentication.js";
 
@@ -25,6 +29,8 @@ router
     ],
     createUser
   );
+
+//**  ADMIN ROUTES*/
 // Get all users (Admin only)
 router.route("/").get(authenticate, isAdmin, getAllUsers);
 
@@ -34,13 +40,17 @@ router.route("/:id").delete(authenticate, isAdmin, deleteUser);
 // get a single user (Admin only)
 router.route("/:id").get(authenticate, isAdmin, getSingleUser);
 
+// update a single user (Admin only)
+router.route("/:id").put(authenticate, isAdmin, updateSingleUser);
+
+//**  USER ROUTES*/
 // Get current user data
 router.route("/profile").get(authenticate, getUserProfile);
 
 // Update current user data
 router.route("/profile").put(authenticate, updateCurrentUser);
 
-// Auth Routes
+//**  AUTH ROUTES*/
 router
   .route("/auth/login")
   .post(
