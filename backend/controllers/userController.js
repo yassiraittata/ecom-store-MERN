@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { matchedData, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import { isValidObjectId } from "mongoose";
 
 import User from "../models/userModel.js";
 import generateToken from "../utils/createToken.js";
@@ -96,6 +97,10 @@ export const updateCurrentUser = asyncHandler(async (req, res) => {
 });
 
 export const deleteUser = asyncHandler(async (req, res) => {
+  if (!isValidObjectId(req.params.id)) {
+    res.status(404);
+    throw new Error("User was not found");
+  }
   const user = await User.findById(req.params.id);
 
   if (!user) {
@@ -104,7 +109,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
   }
 
   if (user.isAdmin) {
-    res.status(404);
+    res.status(400);
     throw new Error("Cannot delete admin");
   }
 
@@ -114,4 +119,19 @@ export const deleteUser = asyncHandler(async (req, res) => {
     message: "User deleted successfully",
     status: res.statusCode,
   });
+});
+
+export const getSingleUser = asyncHandler(async (req, res) => {
+  if (!isValidObjectId(req.params.id)) {
+    res.status(404);
+    throw new Error("User was not found");
+  }
+  const user = await User.findById(req.params.id).select("-password ");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User was not found");
+  }
+
+  res.status(201).json(user);
 });

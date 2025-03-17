@@ -7,6 +7,7 @@ import {
   getUserProfile,
   updateCurrentUser,
   deleteUser,
+  getSingleUser,
 } from "../controllers/userController.js";
 import { loginUser, logoutUser } from "../controllers/authController.js";
 import { authenticate, isAdmin } from "../middlewares/authentication.js";
@@ -29,6 +30,9 @@ router.route("/").get(authenticate, isAdmin, getAllUsers);
 
 // Delete a user (Admin only)
 router.route("/:id").delete(authenticate, isAdmin, deleteUser);
+
+// get a single user (Admin only)
+router.route("/:id").get(authenticate, isAdmin, getSingleUser);
 
 // Get current user data
 router.route("/profile").get(authenticate, getUserProfile);
