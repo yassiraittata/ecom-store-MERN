@@ -3,6 +3,7 @@ import { matchedData, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 
 import User from "../models/userModel.js";
+import generateToken from "../utils/createToken.js";
 
 export const createUser = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -30,9 +31,15 @@ export const createUser = asyncHandler(async (req, res) => {
 
   await user.save();
 
+  generateToken(res, user._id);
+
   res.status(201).json({
     message: "User created successfully",
     status: res.statusCode,
     user: { id: user._id, email, username },
   });
+});
+
+export const getAllUsers = asyncHandler(async (req, res) => {
+  res.send("get users");
 });
