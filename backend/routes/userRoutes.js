@@ -6,14 +6,16 @@ import {
   getAllUsers,
   getUserProfile,
   updateCurrentUser,
+  deleteUser,
 } from "../controllers/userController.js";
 import { loginUser, logoutUser } from "../controllers/authController.js";
 import { authenticate, isAdmin } from "../middlewares/authentication.js";
 
 const router = express.Router();
 
+// Create a user
 router
-  .route("/")
+  .route("/create")
   .post(
     [
       body("username").isString(),
@@ -22,11 +24,19 @@ router
     ],
     createUser
   );
-
+// Get all users (Admin only)
 router.route("/").get(authenticate, isAdmin, getAllUsers);
+
+// Delete a user (Admin only)
+router.route("/:id").delete(authenticate, isAdmin, deleteUser);
+
+// Get current user data
 router.route("/profile").get(authenticate, getUserProfile);
+
+// Update current user data
 router.route("/profile").put(authenticate, updateCurrentUser);
 
+// Auth Routes
 router
   .route("/auth/login")
   .post(

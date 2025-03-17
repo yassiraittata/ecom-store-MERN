@@ -78,7 +78,7 @@ export const updateCurrentUser = asyncHandler(async (req, res) => {
 
   if (body.password) {
     const hashedPw = await bcrypt.hash(body.password, 12);
-    userExisted.password = hashedPw || userExisted.password;
+    userExisted.password = hashedPw;
   }
 
   await userExisted.save();
@@ -90,6 +90,28 @@ export const updateCurrentUser = asyncHandler(async (req, res) => {
       id: userExisted._id,
       email: userExisted.email,
       username: userExisted.username,
+      isAdmin: userExisted.isAdmin,
     },
+  });
+});
+
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User was not found");
+  }
+
+  if (user.isAdmin) {
+    res.status(404);
+    throw new Error("Cannot delete admin");
+  }
+
+  await User.deleteOne({ _id: user._id });
+
+  res.status(201).json({
+    message: "User deleted successfully",
+    status: res.statusCode,
   });
 });
