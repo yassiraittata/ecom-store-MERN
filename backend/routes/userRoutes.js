@@ -34,16 +34,14 @@ router
 // Get all users (Admin only)
 router.route("/").get(authenticate, isAdmin, getAllUsers);
 
-// Delete a user (Admin only)
-router.route("/:id").delete(authenticate, isAdmin, deleteUser);
+// Delete, Get, Update a user (Admin only)
+router
+  .route("/:id")
+  .delete(authenticate, isAdmin, deleteUser)
+  .get(authenticate, isAdmin, getSingleUser)
+  .put(authenticate, isAdmin, updateSingleUser);
 
-// get a single user (Admin only)
-router.route("/:id").get(authenticate, isAdmin, getSingleUser);
-
-// update a single user (Admin only)
-router.route("/:id").put(authenticate, isAdmin, updateSingleUser);
-
-//**  USER ROUTES*/
+//**  USER ROUTES */
 // Get current user data
 router.route("/profile").get(authenticate, getUserProfile);
 

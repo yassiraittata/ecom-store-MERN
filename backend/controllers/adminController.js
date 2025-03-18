@@ -70,10 +70,10 @@ export const updateSingleUser = asyncHandler(async (req, res) => {
   user.email = body.email || user.email;
   user.isAdmin = body.isAdmin || user.isAdmin;
 
-  if (body.password) {
-    const hashedPw = await bcrypt.hash(body.password, 12);
-    user.password = hashedPw;
-  }
+  //   if (body.password) {
+  //     const hashedPw = await bcrypt.hash(body.password, 12);
+  //     user.password = hashedPw;
+  //   }
 
   await user.save();
 
