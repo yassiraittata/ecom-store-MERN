@@ -6,15 +6,24 @@ import {
   AiOutlineUserAdd,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { FaHeart } from "react-icons/fa";
-
 import { Link, useNavigate } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useLoginMutation } from "../../store/api/usersApiSlice";
+import { logout } from "../../store/features/auth/authSlice";
 
 import "./Navigation.css";
 
 export default function Navigation() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
+  const userInfo = useSelector((state) => state.auth.userInfo);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApiCall] = useLoginMutation();
 
   function toggleDropDown() {
     setDropDownOpen((value) => !value);
@@ -26,6 +35,16 @@ export default function Navigation() {
 
   function closeSideBar() {
     setShowSideBar(false);
+  }
+
+  async function logoutHandler() {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -66,9 +85,18 @@ export default function Navigation() {
           <span className="hidden nav-item-name mt-[3rem]">Favorites</span>
         </Link>
       </div>
-     <div className="relative">
-      <button onClick={}></button>
-     </div>
+      <div className="relative">
+        <button
+          onClick={toggleDropDown}
+          className="flex items-center text-gray-800 focus:outline-none"
+        >
+          {userInfo ? (
+            <span className="text-white">{userInfo.username}</span>
+          ) : (
+            <></>
+          )}
+        </button>
+      </div>
       <ul>
         <li>
           <Link
