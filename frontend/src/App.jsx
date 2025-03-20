@@ -3,12 +3,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "react-toastify/ReactToastify.css";
 
 import RootLayout from "./pages/layouts/RootLayout";
+import Login from "./pages/Auth/Login";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    children: [],
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
   },
 ]);
 
