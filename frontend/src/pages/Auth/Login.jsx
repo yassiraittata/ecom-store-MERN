@@ -27,8 +27,45 @@ export default function Login() {
   }, [navigate, redirect, userInfo]);
 
   return (
-    <div className=" text-center bg-red-700 text-white text-xl font-black w-screen">
-      {el}
-    </div>
+    <section className="pl-[10rem] flex flex-wrap">
+      <div className="mr-[4rem] mt-[5rem]">
+        <h1 className="text-2xl font-semibold mb-4">Sign In</h1>
+        <form className="container w-[40rem]">
+          <div className="my-[2rem]">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-slate-600 mb-2"
+            >
+              Email Adress
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              placeholder="john.doe@company.com"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="my-[2rem]">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-slate-600 mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              placeholder="*****************"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </form>
+      </div>
+    </section>
   );
 }
