@@ -1,12 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { apiSlice } from "./apiSlice";
+import { USERS_URL } from "../constants";
 
-const userSlice = createSlice({
-  name: "users",
-  reducers: {
-    createUser() {},
-  },
+const usersApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/auth/login`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
 });
 
-export default userSlice.reducer;
-
-export const { createUser } = userSlice.actions;
+export const { useLoginMutation } = usersApiSlice;

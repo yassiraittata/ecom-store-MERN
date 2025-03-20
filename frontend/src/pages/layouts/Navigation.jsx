@@ -66,6 +66,9 @@ export default function Navigation() {
           <span className="hidden nav-item-name mt-[3rem]">Favorites</span>
         </Link>
       </div>
+     <div className="relative">
+      <button onClick={}></button>
+     </div>
       <ul>
         <li>
           <Link
