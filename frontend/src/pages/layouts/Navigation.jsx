@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
-import { useLoginMutation } from "../../store/api/usersApiSlice";
+import { useLogoutMutation } from "../../store/api/usersApiSlice";
 import { logout } from "../../store/features/auth/authSlice";
 
 import "./Navigation.css";
@@ -23,7 +23,7 @@ export default function Navigation() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall] = useLoginMutation();
+  const [logoutApiCall] = useLogoutMutation();
 
   function toggleDropDown() {
     setDropDownOpen((value) => !value);
@@ -85,38 +85,126 @@ export default function Navigation() {
           <span className="hidden nav-item-name mt-[3rem]">Favorites</span>
         </Link>
       </div>
-      <div className="relative">
+      <div className="relative ">
         <button
           onClick={toggleDropDown}
-          className="flex items-center text-gray-800 focus:outline-none"
+          className="flex items-center justify-between text-gray-800 focus:outline-none w-full"
         >
           {userInfo ? (
             <span className="text-white">{userInfo.username}</span>
           ) : (
             <></>
           )}
+          {userInfo && (
+            <span
+              className={`ml-1 mt-1 text-white ${
+                dropDownOpen ? "transform rotate-180" : ""
+              }`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="size-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </span>
+          )}
         </button>
+        {dropDownOpen && userInfo && (
+          <ul
+            className={`absolute nav-item-name  right-0 bg-white text-gray-600 font-medium shadow-md rounded-md overflow-hidden min-w-[10rem] text-center space-y-2 -bottom-full mb-12`}
+          >
+            {userInfo.isAdmin && (
+              <>
+                <li>
+                  <Link
+                    to="/admin/dashboard"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/productslist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/categorieslist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Categories
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/orderslist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/userslist"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Users
+                  </Link>
+                </li>
+              </>
+            )}
+            <li>
+              <Link to="/Profile" className="block px-4 py-2 hover:bg-gray-100">
+                Profile
+              </Link>
+            </li>
+            <li>
+              <button
+                onClick={logoutHandler}
+                className="block px-4 py-2 hover:bg-gray-100 w-full cursor-pointer"
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+        )}
       </div>
-      <ul>
-        <li>
-          <Link
-            to="/login"
-            className="flex items-center transition-transform transform hover:translate-x-2"
-          >
-            <AiOutlineLogin size={26} className="mr-2 mt-[3rem]" />
-            <span className="hidden nav-item-name mt-[3rem]">Login</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/register"
-            className="flex items-center transition-transform transform hover:translate-x-2"
-          >
-            <AiOutlineUserAdd size={26} className="mr-2 mt-[3rem]" />
-            <span className="hidden nav-item-name mt-[3rem]">Register</span>
-          </Link>
-        </li>
-      </ul>
+
+      {!userInfo && (
+        <ul>
+          <li>
+            <Link
+              to="/login"
+              className="flex items-center transition-transform transform hover:translate-x-2"
+            >
+              <AiOutlineLogin size={26} className="mr-2 mt-[3rem]" />
+              <span className="hidden nav-item-name mt-[3rem]">Login</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/register"
+              className="flex items-center transition-transform transform hover:translate-x-2"
+            >
+              <AiOutlineUserAdd size={26} className="mr-2 mt-[3rem]" />
+              <span className="hidden nav-item-name mt-[3rem]">Register</span>
+            </Link>
+          </li>
+        </ul>
+      )}
     </nav>
   );
 }
