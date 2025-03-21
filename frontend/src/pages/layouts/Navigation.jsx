@@ -52,37 +52,37 @@ export default function Navigation() {
       style={{ zIndex: 999 }}
       className={`${
         showSideBar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-slate-900 w-[4%] hover:w-[15%] h-[100vh] fixed`}
+      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between  text-black bg-gradient-to-b from-[#fddb92] to-[#d1fdff] w-[4%] hover:w-[15%] h-[100vh] fixed shadow-md transition-all duration-300 ease-in-out`}
       id="navigation-container"
     >
-      <div className="flex flex-col justify-center space-y-4">
+      <div className="flex flex-col justify-center space-y-4 mt-[5rem]">
         <Link
           to="/"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className="flex items-center transition-transform transform hover:translate-x-2 hover:bg-gray-100 p-4"
         >
-          <AiOutlineHome size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">Home</span>
+          <AiOutlineHome size={26} className="mr-3" />
+          <span className="hidden nav-item-name">Home</span>
         </Link>
         <Link
           to="/shop"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className="flex items-center transition-transform transform hover:translate-x-2 hover:bg-gray-100 p-4"
         >
-          <AiOutlineShopping size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">Shop</span>
+          <AiOutlineShopping size={26} className="mr-3" />
+          <span className="hidden nav-item-name">Shop</span>
         </Link>
         <Link
           to="/cart"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className="flex items-center transition-transform transform hover:translate-x-2 hover:bg-gray-100 p-4"
         >
-          <AiOutlineShoppingCart size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">Cart</span>
+          <AiOutlineShoppingCart size={26} className="mr-3" />
+          <span className="hidden nav-item-name">Cart</span>
         </Link>
         <Link
           to="/favorite"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className="flex items-center transition-transform transform hover:translate-x-2 hover:bg-gray-100 p-4"
         >
-          <FaHeart size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">Favorites</span>
+          <FaHeart size={26} className="mr-3" />
+          <span className="hidden nav-item-name">Favorites</span>
         </Link>
       </div>
       <div className="relative ">
@@ -188,19 +188,19 @@ export default function Navigation() {
           <li>
             <Link
               to="/login"
-              className="flex items-center transition-transform transform hover:translate-x-2"
+              className="flex items-center transition-transform transform hover:translate-x-2 hover:bg-gray-100 p-4"
             >
-              <AiOutlineLogin size={26} className="mr-2 mt-[3rem]" />
-              <span className="hidden nav-item-name mt-[3rem]">Login</span>
+              <AiOutlineLogin size={26} className="mr-3" />
+              <span className="hidden nav-item-name">Login</span>
             </Link>
           </li>
           <li>
             <Link
               to="/register"
-              className="flex items-center transition-transform transform hover:translate-x-2"
+              className="flex items-center transition-transform transform hover:translate-x-2 hover:bg-gray-100 p-4"
             >
-              <AiOutlineUserAdd size={26} className="mr-2 mt-[3rem]" />
-              <span className="hidden nav-item-name mt-[3rem]">Register</span>
+              <AiOutlineUserAdd size={26} className="mr-3" />
+              <span className="hidden nav-item-name">Register</span>
             </Link>
           </li>
         </ul>
