@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../store/api/usersApiSlice";
 import { setCredentials } from "../../store/features/auth/authSlice";
 
+import ShopBg from "../../../public/shop-bg.jpg";
+
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -63,10 +65,10 @@ export default function Register() {
     }
   }
   return (
-    <section className="pl-[10rem] flex flex-wrap  items-center justify-center">
-      <div className="mr-[4rem] mt-[5rem]">
+    <section className="pl-[10rem] flex flex-wrap  items-center">
+      <div className="mr-[4rem] mt-[5rem] relative z-10  bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-semibold mb-4">Register</h1>
-        <form className="container w-[40rem]" onSubmit={submitHandler}>
+        <form className="container w-[30rem]" onSubmit={submitHandler}>
           <div className="my-[2rem]">
             <label
               htmlFor="username"
@@ -77,7 +79,7 @@ export default function Register() {
             <input
               type="text"
               id="username"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
               placeholder="John doe"
               required
               value={username}
@@ -94,7 +96,7 @@ export default function Register() {
             <input
               type="email"
               id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
               placeholder="john.doe@company.com"
               required
               value={email}
@@ -111,7 +113,7 @@ export default function Register() {
             <input
               type="password"
               id="password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
               placeholder="*****************"
               required
               value={password}
@@ -128,7 +130,7 @@ export default function Register() {
             <input
               type="password"
               id="password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
               placeholder="*****************"
               required
               value={confirmPassword}
@@ -137,7 +139,7 @@ export default function Register() {
           </div>
           <button
             type="submit"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            class="text-white block  bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer"
             disabled={isLoading || !isFormValid}
           >
             {isLoading ? "Submitting ..." : "Register"}
@@ -147,7 +149,7 @@ export default function Register() {
           <p className=" text-gray-700">
             I already have an account{" "}
             <Link
-              className="text-blue-500 underline ml-1"
+              className="text-orange-500 underline ml-1"
               to={redirect ? `/login?redirect=${redirect}` : "/login"}
             >
               Sign in.
@@ -155,6 +157,11 @@ export default function Register() {
           </p>
         </div>
       </div>
+      <img
+        src={ShopBg}
+        alt="Shop Background"
+        className="fixed h-screen w-screen top-0 left-0"
+      />
     </section>
   );
 }
