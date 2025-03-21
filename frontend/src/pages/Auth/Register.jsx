@@ -10,6 +10,9 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,15 +30,31 @@ export default function Register() {
     }
   }, [navigate, redirect, userInfo]);
 
+  useEffect(() => {
+    if (!username || !email || !password || !confirmPassword) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [username, email, password, confirmPassword]);
+
   async function submitHandler(event) {
     event.preventDefault();
 
+    if (!username || !email || !password || !confirmPassword) {
+      return toast.error("All fields are required!");
+    }
+
     try {
+      if (password !== confirmPassword) {
+        return toast.error("Passwords do not match!");
+      }
+
       const res = await registerApiCall({ username, email, password }).unwrap();
       console.log(res);
-      setCredentials({
-        ...res.user,
-      });
+      dispatch(setCredentials({ ...res.user }));
+      navigate(redirect);
+      toast.success("Account created successfully!");
     } catch (error) {
       console.log(error);
       toast.error(
@@ -53,13 +72,13 @@ export default function Register() {
               htmlFor="username"
               className="block text-sm font-medium text-slate-600 mb-2"
             >
-              Username
+              Name
             </label>
             <input
               type="text"
               id="username"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="john doe"
+              placeholder="John doe"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -99,10 +118,27 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className="my-[2rem]">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-slate-600 mb-2"
+            >
+              Confirm password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              placeholder="*****************"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
           <button
             type="submit"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer"
-            disabled={isLoading}
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isLoading || !isFormValid}
           >
             {isLoading ? "Submitting ..." : "Register"}
           </button>
