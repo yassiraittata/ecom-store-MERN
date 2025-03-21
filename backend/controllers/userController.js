@@ -36,7 +36,7 @@ export const createUser = asyncHandler(async (req, res) => {
   res.status(201).json({
     message: "User created successfully",
     status: res.statusCode,
-    user: { id: user._id, email, username },
+    user: { id: user._id, email, username, isAdmin: user.isAdmin },
   });
 });
 

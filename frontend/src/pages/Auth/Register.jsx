@@ -11,15 +11,38 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userInfo = useSelector((state) => state.auth.userInfo);
 
   const [registerApiCall, { isLoading }] = useRegisterMutation();
 
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
+
   async function submitHandler(event) {
     event.preventDefault();
-  }
 
+    try {
+      const res = await registerApiCall({ username, email, password }).unwrap();
+      console.log(res);
+      setCredentials({
+        ...res.user,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error?.data?.message || error?.message || "Something went wrong!"
+      );
+    }
+  }
   return (
     <section className="pl-[10rem] flex flex-wrap  items-center justify-center">
       <div className="mr-[4rem] mt-[5rem]">
@@ -36,7 +59,7 @@ export default function Register() {
               type="text"
               id="username"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="john.doe@company.com"
+              placeholder="john doe"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -87,7 +110,10 @@ export default function Register() {
         <div className="mt-4 text-sm">
           <p className=" text-gray-700">
             I already have an account{" "}
-            <Link className="text-blue-500 underline ml-1" to={"/login"}>
+            <Link
+              className="text-blue-500 underline ml-1"
+              to={redirect ? `/login?redirect=${redirect}` : "/login"}
+            >
               Sign in.
             </Link>
           </p>
