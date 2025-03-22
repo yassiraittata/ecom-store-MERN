@@ -52,7 +52,7 @@ export default function Navigation() {
       style={{ zIndex: 999 }}
       className={`${
         showSideBar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between  text-black bg-gradient-to-b from-[#fddb92] to-[#d1fdff] w-[4%] hover:w-[15%] h-[100vh] fixed shadow-md transition-all duration-300 ease-in-out`}
+      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between  text-black bg-gradient-to-b from-[#fddb92] to-[#d1fdff] w-[4%] hover:w-[15%] h-[100vh] fixed shadow-md pb-2`}
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4 mt-[5rem]">
