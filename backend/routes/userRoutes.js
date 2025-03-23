@@ -30,6 +30,13 @@ router
     createUser
   );
 
+//**  USER ROUTES */
+// Get current user data
+router
+  .route("/profile")
+  .get(authenticate, getUserProfile)
+  .put(authenticate, updateCurrentUser);
+
 //**  ADMIN ROUTES*/
 // Get all users (Admin only)
 router.route("/").get(authenticate, isAdmin, getAllUsers);
@@ -40,13 +47,6 @@ router
   .delete(authenticate, isAdmin, deleteUser)
   .get(authenticate, isAdmin, getSingleUser)
   .put(authenticate, isAdmin, updateSingleUser);
-
-//**  USER ROUTES */
-// Get current user data
-router.route("/profile").get(authenticate, getUserProfile);
-
-// Update current user data
-router.route("/profile").put(authenticate, updateCurrentUser);
 
 //**  AUTH ROUTES*/
 router

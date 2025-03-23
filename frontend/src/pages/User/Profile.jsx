@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { setCredentials } from "../../store/features/auth/authSlice";
 import { AiOutlineUser } from "react-icons/ai";
+import { useUpdateUserProfileMutation } from "../../store/api/usersApiSlice";
 
 export default function Profile() {
   const [username, setUseranme] = useState("");
@@ -11,8 +12,39 @@ export default function Profile() {
   const [password, setPassword] = useState("");
   const [confisrPassword, setConfisrPassword] = useState("");
 
+  const navigate = useNavigate();
+
+  const userInfo = useSelector((state) => state.auth.userInfo);
+
+  const dispatch = useDispatch();
+  const [updateUserProfile, { isLoading, error }] =
+    useUpdateUserProfileMutation();
+
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (password !== confisrPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const res = await updateUserProfile({
+        _id: userInfo.id,
+        username,
+        email,
+        password,
+      }).unwrap();
+
+      console.log(res);
+
+      dispatch(setCredentials(res.user));
+      toast.success("Profile updated successfully");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.data?.message || error.message || "An error occurred");
+    }
   }
 
   return (
@@ -38,7 +70,9 @@ export default function Profile() {
                 <input
                   type="text"
                   className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
-                  placeholder="First Name"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUseranme(e.target.value)}
                 />
               </div>
               <div class="w-full  mb-4 lg:mt-6">
@@ -49,9 +83,11 @@ export default function Profile() {
                   Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
-                  placeholder="Last Name"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div class="w-full  mb-4 lg:mt-6">
@@ -64,7 +100,9 @@ export default function Profile() {
                 <input
                   type="text"
                   className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
-                  placeholder="Last Name"
+                  placeholder="******"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div class="w-full  mb-4 lg:mt-6">
@@ -77,13 +115,16 @@ export default function Profile() {
                 <input
                   type="text"
                   className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
-                  placeholder="Last Name"
+                  placeholder="******"
+                  value={confisrPassword}
+                  onChange={(e) => setConfisrPassword(e.target.value)}
                 />
               </div>
 
               <button
                 type="submit"
-                class="text-white block  bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer"
+                class="text-white block  bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isLoading}
               >
                 Update
               </button>

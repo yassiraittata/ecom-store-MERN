@@ -85,19 +85,15 @@ export default function Navigation() {
           <span className="hidden nav-item-name">Favorites</span>
         </Link>
       </div>
-      <div className="relative ">
+      <div className="relative px-3">
         <button
           onClick={toggleDropDown}
           className="flex items-center justify-between text-gray-800 focus:outline-none w-full"
         >
-          {userInfo ? (
-            <span className="text-white">{userInfo.username}</span>
-          ) : (
-            <></>
-          )}
+          {userInfo ? <span>{userInfo.username}</span> : <></>}
           {userInfo && (
             <span
-              className={`ml-1 mt-1 text-white ${
+              className={`ml-1 mt-1 ${
                 dropDownOpen ? "transform rotate-180" : ""
               }`}
             >
