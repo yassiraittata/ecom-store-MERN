@@ -6,6 +6,15 @@ import { setCredentials } from "../../store/features/auth/authSlice";
 import { AiOutlineUser } from "react-icons/ai";
 
 export default function Profile() {
+  const [username, setUseranme] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confisrPassword, setConfisrPassword] = useState("");
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+  }
+
   return (
     <section class=" pl-[10rem] py-10 my-auto">
       <div class="max-w-3xl flex gap-4">
@@ -18,13 +27,13 @@ export default function Profile() {
               Profile
             </h1>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <div class="w-full  mb-4 mt-6">
                 <label
                   for=""
                   className="block text-sm font-medium text-slate-600 mb-2"
                 >
-                  First Name
+                  Name
                 </label>
                 <input
                   type="text"
@@ -37,7 +46,33 @@ export default function Profile() {
                   for=""
                   className="block text-sm font-medium text-slate-600 mb-2"
                 >
-                  Last Name
+                  Email
+                </label>
+                <input
+                  type="text"
+                  className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
+                  placeholder="Last Name"
+                />
+              </div>
+              <div class="w-full  mb-4 lg:mt-6">
+                <label
+                  for=""
+                  className="block text-sm font-medium text-slate-600 mb-2"
+                >
+                  Password
+                </label>
+                <input
+                  type="text"
+                  className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
+                  placeholder="Last Name"
+                />
+              </div>
+              <div class="w-full  mb-4 lg:mt-6">
+                <label
+                  for=""
+                  className="block text-sm font-medium text-slate-600 mb-2"
+                >
+                  Confirm password
                 </label>
                 <input
                   type="text"
@@ -50,7 +85,7 @@ export default function Profile() {
                 type="submit"
                 class="text-white block  bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer"
               >
-                Submit
+                Update
               </button>
             </form>
           </div>
