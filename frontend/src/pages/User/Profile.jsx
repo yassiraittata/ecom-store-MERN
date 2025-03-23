@@ -3,14 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
 import { setCredentials } from "../../store/features/auth/authSlice";
+import { AiOutlineUser } from "react-icons/ai";
 
 export default function Profile() {
   return (
-    <section class="py-10 my-auto">
-      <div class="lg:w-[80%] md:w-[90%] w-[96%] mx-auto flex gap-4">
+    <section class=" pl-[10rem] py-10 my-auto">
+      <div class="max-w-3xl flex gap-4">
         <div class="lg:w-[88%] sm:w-[88%] w-full mx-auto  p-4 rounded-xl h-fit self-center">
           <div class="">
-            <h1 className="text-3xl font-semibold mb-4">Profile</h1>
+            <h1 className="text-3xl font-semibold mb-4 flex items-center">
+              <span>
+                <AiOutlineUser size={26} className="mr-3" />
+              </span>
+              Profile
+            </h1>
 
             <form>
               <div class="w-full  mb-4 mt-6">
