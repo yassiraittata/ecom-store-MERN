@@ -40,7 +40,7 @@ export default function Profile() {
 
       dispatch(setCredentials(res.user));
       toast.success("Profile updated successfully");
-      navigate("/");
+    //   navigate("/");
     } catch (error) {
       console.error(error);
       toast.error(error.data?.message || error.message || "An error occurred");

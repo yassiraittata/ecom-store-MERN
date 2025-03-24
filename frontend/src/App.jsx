@@ -7,6 +7,8 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import PrivetRoute from "./components/PrivetRoute";
 import Profile from "./pages/User/Profile";
+import AdminRoutes from "./components/AdminRoutes";
+import UsersList from "./pages/Admin/usersList";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,16 @@ const router = createBrowserRouter([
           {
             path: "/profile",
             element: <Profile />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: <AdminRoutes />,
+        children: [
+          {
+            path: "users",
+            element: <UsersList />,
           },
         ],
       },
