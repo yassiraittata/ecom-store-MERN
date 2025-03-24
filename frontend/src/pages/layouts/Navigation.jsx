@@ -116,7 +116,7 @@ export default function Navigation() {
         </button>
         {dropDownOpen && userInfo && (
           <ul
-            className={`absolute nav-item-name  right-0 bg-white text-gray-600 font-medium shadow-md rounded-md overflow-hidden min-w-[10rem] text-center space-y-2 -bottom-full mb-12`}
+            className={`absolute nav-item-name  right-3 bg-white text-gray-600 font-medium shadow-md rounded-md overflow-hidden min-w-[10rem] text-center space-y-2 -bottom-full mb-12`}
           >
             {userInfo.isAdmin && (
               <>
