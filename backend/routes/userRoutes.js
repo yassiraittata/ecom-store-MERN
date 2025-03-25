@@ -51,10 +51,11 @@ router
 //**  AUTH ROUTES*/
 router
   .route("/auth/login")
-  .post(
+  .post(fgetAll
     [body("email").isString().isEmail(), body("password").isString()],
     loginUser
   );
+
 router.route("/auth/logout").post(authenticate, logoutUser);
 
 export default router;

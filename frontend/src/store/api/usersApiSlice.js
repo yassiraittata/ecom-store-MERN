@@ -36,6 +36,22 @@ const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getAlluser: builder.query({
+      query: () => ({
+        url: `${USERS_URL}`,
+        method: "GET",
+        providesTags: ["User"],
+      }),
+    }),
+
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `${USERS_URL}/${id}`,
+        method: "DELETE",
+        providesTags: ["User"],
+      }),
+    }),
   }),
 });
 
