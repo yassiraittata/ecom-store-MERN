@@ -52,6 +52,13 @@ const usersApiSlice = apiSlice.injectEndpoints({
         providesTags: ["User"],
       }),
     }),
+    getUserDetails: builder.query({
+      query: (id) => ({
+        url: `${USERS_URL}/${id}`,
+        method: "GET",
+        providesTags: ["User"],
+      }),
+    }),
   }),
 });
 
