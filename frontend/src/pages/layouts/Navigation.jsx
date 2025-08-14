@@ -6,8 +6,8 @@ import {
   AiOutlineUserAdd,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useLogoutMutation } from "../../store/api/usersApiSlice";

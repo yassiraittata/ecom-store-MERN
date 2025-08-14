@@ -34,7 +34,6 @@ export default function Login() {
     try {
       const res = await logingApi({ email, password }).unwrap();
 
-      console.log(res);
       dispatch(
         setCredentials({
           ...res.user,
@@ -88,7 +87,7 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            class="text-white block  bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer"
+            class="text-white block  bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer disabled:cursor-not-allowed"
             disabled={isLaoding}
           >
             {isLaoding ? "Siging in ..." : "Sign in"}
