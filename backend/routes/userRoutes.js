@@ -51,7 +51,7 @@ router
 //**  AUTH ROUTES*/
 router
   .route("/auth/login")
-  .post(fgetAll
+  .post(
     [body("email").isString().isEmail(), body("password").isString()],
     loginUser
   );

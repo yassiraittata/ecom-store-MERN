@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { FaTrash, FaEdit, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
+import {
+  useGetAlluserQuery,
+  useDeleteUserMutation,
+  useGetUserDetailsQuery,
+  useUpdateUserMutation,
+} from "../../store/api/usersApiSlice";
 
 export default function UsersList() {
   return <div className="bg-red-600">usersList</div>;
