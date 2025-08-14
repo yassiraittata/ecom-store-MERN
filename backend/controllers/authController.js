@@ -18,7 +18,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   const userExisted = await User.findOne({ email });
 
   if (!userExisted) {
-    res.status(400);
+    res.status(404);
     throw new Error("Email is not existed");
   }
 

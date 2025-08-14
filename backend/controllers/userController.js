@@ -47,6 +47,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User was not found");
   }
+  
   res.json({
     id: user._id,
     email: user.email,

@@ -31,7 +31,7 @@ router
   );
 
 //**  USER ROUTES */
-// Get current user data
+// Get/update current user data
 router
   .route("/profile")
   .get(authenticate, getUserProfile)
