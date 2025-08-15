@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { setCredentials } from "../../store/features/auth/authSlice";
 import { AiOutlineUser } from "react-icons/ai";
@@ -12,12 +11,10 @@ export default function Profile() {
   const [password, setPassword] = useState("");
   const [confisrPassword, setConfisrPassword] = useState("");
 
-  const navigate = useNavigate();
-
   const userInfo = useSelector((state) => state.auth.userInfo);
 
   const dispatch = useDispatch();
-  const [updateUserProfile, { isLoading, error }] =
+  const [updateUserProfile, { isLoading }] =
     useUpdateUserProfileMutation();
 
   useEffect(() => {
