@@ -37,7 +37,7 @@ const usersApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    getAlluser: builder.query({
+    getAllUsers: builder.query({
       query: () => ({
         url: `${USERS_URL}`,
         method: "GET",
@@ -53,6 +53,7 @@ const usersApiSlice = apiSlice.injectEndpoints({
         providesTags: ["User"],
       }),
     }),
+
     getUserDetails: builder.query({
       query: (id) => ({
         url: `${USERS_URL}/${id}`,
@@ -79,7 +80,7 @@ export const {
   useRegisterMutation,
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
-  useGetAlluserQuery,
+  useGetAllUsersQuery,
   useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation,

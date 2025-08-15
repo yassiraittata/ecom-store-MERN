@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Message({ variant, children }) {
   const getVariantClass = () => {
     switch (variant) {
@@ -11,5 +9,5 @@ export default function Message({ variant, children }) {
         return "bg-blue-100 text-blue-800";
     }
   };
-  return <div className={`p-4 rounded ${getVariantClass}`}>{children}</div>;
+  return <div className={`p-4 rounded ${getVariantClass()}`}>{children}</div>;
 }
