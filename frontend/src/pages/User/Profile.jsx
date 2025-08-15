@@ -101,7 +101,7 @@ export default function Profile() {
                   Password
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
                   placeholder="******"
                   value={password}
@@ -116,7 +116,7 @@ export default function Profile() {
                   Confirm password
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   className="outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 "
                   placeholder="******"
                   value={confisrPassword}
