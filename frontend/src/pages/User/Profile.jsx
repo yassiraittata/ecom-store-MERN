@@ -20,6 +20,11 @@ export default function Profile() {
   const [updateUserProfile, { isLoading, error }] =
     useUpdateUserProfileMutation();
 
+  useEffect(() => {
+    setUseranme(userInfo.username);
+    setEmail(userInfo.email);
+  }, [userInfo.username, userInfo.email]);
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -36,11 +41,9 @@ export default function Profile() {
         password,
       }).unwrap();
 
-      console.log(res);
-
       dispatch(setCredentials(res.user));
       toast.success("Profile updated successfully");
-    //   navigate("/");
+      //   navigate("/");
     } catch (error) {
       console.error(error);
       toast.error(error.data?.message || error.message || "An error occurred");
