@@ -22,6 +22,7 @@ export default function UsersList() {
   } = useGetAllUsersQuery();
 
   const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   const [editableUserId, setEditableUserId] = useState(null);
   const [editableUserName, setEditableUserName] = useState(null);
@@ -31,9 +32,26 @@ export default function UsersList() {
     refetch();
   }, [refetch]);
 
-  function updateHandler(id) {}
+  async function updateHandler(id) {
+    try {
+      await updateUser({
+        user_id: id,
+        username: editableUserName,
+        email: editableUserEmail,
+      });
 
-  function toggleEdit(id, name, email) {}
+      setEditableUserId(null);
+      refetch();
+    } catch (e) {
+      toast.error(e?.daat?.message || e.message);
+    }
+  }
+
+  function toggleEdit(id, name, email) {
+    setEditableUserId(id);
+    setEditableUserName(name);
+    setEditableUserEmail(email);
+  }
 
   async function deleteHandler(id) {
     if (window.confirm("Are you sure ?")) {
@@ -74,18 +92,18 @@ export default function UsersList() {
                     <td className="px-4 py-2">{user._id}</td>
                     <td className="px-4 py-2">
                       {editableUserId === user._id ? (
-                        <div className="flex items-center">
+                        <div className="flex">
                           <input
                             type="text"
                             value={editableUserName}
                             onChange={(e) =>
-                              setEditableUserName(e.value.target)
+                              setEditableUserName(e.target.value)
                             }
-                            className="w-full rounded-lg"
+                            className="w-full rounded-lg border p-2"
                           />
                           <button
                             onClick={() => updateHandler(user._id)}
-                            className="ml-2 bg-blue-500 py-2 px-4 rounded-lg"
+                            className="ml-2 bg-blue-500 py-2 px-4 rounded-lg cursor-pointer"
                           >
                             <FaCheck />
                           </button>
@@ -108,18 +126,18 @@ export default function UsersList() {
                     </td>
                     <td className="px-4 py-2">
                       {editableUserId === user._id ? (
-                        <div className="flex items-center">
+                        <div className="flex ">
                           <input
                             type="text"
                             value={editableUserEmail}
                             onChange={(e) =>
-                              setEditableUserEmail(e.value.target)
+                              setEditableUserEmail(e.target.value)
                             }
-                            className="w-full rounded-lg"
+                            className="w-full rounded-lg border p-2"
                           />
                           <button
                             onClick={() => updateHandler(user._id)}
-                            className="ml-2 bg-blue-500 py-2 px-4 rounded-lg"
+                            className="ml-2 bg-blue-500 py-2 px-4 rounded-lg cursor-pointer"
                           >
                             <FaCheck />
                           </button>
