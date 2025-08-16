@@ -35,6 +35,17 @@ export default function UsersList() {
 
   function toggleEdit(id, name, email) {}
 
+  async function deleteHandler(id) {
+    if (window.confirm("Are you sure ?")) {
+      try {
+        await deleteUser(id);
+        refetch();
+      } catch (e) {
+        toast.error(e?.daat?.message || e.message);
+      }
+    }
+  }
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-semibold mb-4 ">Users</h1>
@@ -93,6 +104,60 @@ export default function UsersList() {
                             </button>
                           </div>
                         </>
+                      )}
+                    </td>
+                    <td className="px-4 py-2">
+                      {editableUserId === user._id ? (
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            value={editableUserEmail}
+                            onChange={(e) =>
+                              setEditableUserEmail(e.value.target)
+                            }
+                            className="w-full rounded-lg"
+                          />
+                          <button
+                            onClick={() => updateHandler(user._id)}
+                            className="ml-2 bg-blue-500 py-2 px-4 rounded-lg"
+                          >
+                            <FaCheck />
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <div className=" flex items-center">
+                            {user.email}{" "}
+                            <button
+                              className="ml-[1rem]"
+                              onClick={() =>
+                                toggleEdit(user._id, user.username, user.email)
+                              }
+                            >
+                              <FaEdit />
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </td>
+                    <td className="px-4 py-2">
+                      {user.isAdmin ? (
+                        <FaCheck style={{ color: "green" }} />
+                      ) : (
+                        <FaTimes style={{ color: "red" }} />
+                      )}
+                    </td>
+                    <td className="px-4 py-2">
+                      {!user.isAdmin && (
+                        <div className="flex">
+                          <button
+                            onClick={() => deleteHandler(user._id)}
+                            className=" text-red-400 font-bold py-2 px-4 rounded cursor-pointer
+                            "
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
                       )}
                     </td>
                   </tr>
