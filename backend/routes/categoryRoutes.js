@@ -6,6 +6,13 @@ import { createCategoty } from "../controllers/categoryController.js";
 
 const router = express.Router();
 
-router.route("/").post([body("name").isString().notEmpty()], createCategoty);
+router
+  .route("/")
+  .post(
+    [body("name").isString().notEmpty()],
+    authenticate,
+    isAdmin,
+    createCategoty
+  );
 
 export default router;
