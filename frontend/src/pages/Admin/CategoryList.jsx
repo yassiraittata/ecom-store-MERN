@@ -14,6 +14,7 @@ const CategoryList = () => {
   const { data: categories, refetch, isLoading } = useGetAllCategoriesQuery();
   const [createCategory] = useCreateCategotyMutation();
   const [updateCategory] = useUpdateCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
 
   const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -70,6 +71,27 @@ const CategoryList = () => {
       setUpdatedName("");
       toast.success("Category updated successfully!");
       setModalIsVisible(false);
+      setSelectedCategory(null);
+
+      refetch();
+    } catch (error) {
+      toast.error("Updating category faild, try again!");
+    }
+  }
+
+  async function handleDeleteCategory() {
+    try {
+      const result = await deleteCategory(selectedCategory._id).unwrap();
+
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      toast.success("Category deleted successfully!");
+      setModalIsVisible(false);
+      setSelectedCategory(null);
+
       refetch();
     } catch (error) {
       toast.error("Updating category faild, try again!");
@@ -125,6 +147,13 @@ const CategoryList = () => {
                 buttonText="Update category"
                 handleSubmit={handleUpdateCategory}
               />
+
+              <button
+                onClick={handleDeleteCategory}
+                class="text-white block w-fit  bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center cursor-pointer disabled:cursor-not-allowed"
+              >
+                Delete
+              </button>
             </Modal>
           </div>
         </div>
