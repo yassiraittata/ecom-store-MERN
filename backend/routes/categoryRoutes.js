@@ -7,6 +7,7 @@ import {
   deleteCategory,
   getAllCategories,
   updateCategory,
+  getSingleCategory,
 } from "../controllers/categoryController.js";
 
 const router = express.Router();
@@ -24,6 +25,7 @@ router
 router
   .route("/:id")
   .put(authenticate, isAdmin, updateCategory)
-  .delete(authenticate, isAdmin, deleteCategory);
+  .delete(authenticate, isAdmin, deleteCategory)
+  .get(getSingleCategory);
 
 export default router;
