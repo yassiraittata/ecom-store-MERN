@@ -23,7 +23,7 @@ router
 
 router
   .route("/:id")
-  .put(updateCategory)
+  .put(authenticate, isAdmin, updateCategory)
   .delete(authenticate, isAdmin, deleteCategory);
 
 export default router;
