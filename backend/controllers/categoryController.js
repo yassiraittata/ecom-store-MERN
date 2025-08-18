@@ -88,7 +88,5 @@ export const getSingleCategory = asyncHandler(async (req, res) => {
     throw new Error("Category was not found!");
   }
 
-  res.status(201).json({
-    category,
-  });
+  res.status(201).json(category);
 });
