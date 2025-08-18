@@ -2,16 +2,17 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   useGetAllCategoriesQuery,
-  useGetSingleCategoryQuery,
   useCreateCategotyMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 } from "../../store/api/categorySlice.js";
 import CategoryForm from "../../components/CategoryForm.jsx";
+import Modal from "../../components/Modal.jsx";
 
 const CategoryList = () => {
   const { data: categories, refetch } = useGetAllCategoriesQuery();
   const [createCategory] = useCreateCategotyMutation();
+  const [updateCategory] = useUpdateCategoryMutation();
 
   const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -39,6 +40,38 @@ const CategoryList = () => {
       refetch();
     } catch (error) {
       toast.error("Creating category faild, try again!");
+    }
+  }
+
+  async function handleUpdateCategory(e) {
+    e.preventDefault();
+
+    if (!updatedName) {
+      toast.error("Category name is required!");
+      return;
+    }
+
+    try {
+      const result = await updateCategory({
+        id: selectedCategory._id,
+        data: {
+          name: updatedName,
+        },
+      }).unwrap();
+
+      console.log(result);
+
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      setUpdatedName("");
+      toast.success("Category updated successfully!");
+      setModalIsVisible(false);
+      refetch();
+    } catch (error) {
+      toast.error("Updating category faild, try again!");
     }
   }
 
@@ -75,6 +108,17 @@ const CategoryList = () => {
                 </div>
               ))}
             </div>
+            <Modal
+              isOpen={modalIsVisible}
+              onClose={() => setModalIsVisible(false)}
+            >
+              <CategoryForm
+                value={updatedName}
+                setValue={setUpdatedName}
+                buttonText="Update category"
+                handleSubmit={handleUpdateCategory}
+              />
+            </Modal>
           </div>
         </div>
       </div>
