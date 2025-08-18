@@ -4,6 +4,7 @@ import { body } from "express-validator";
 import { authenticate, isAdmin } from "../middlewares/authentication.js";
 import {
   createCategoty,
+  deleteCategory,
   getAllCategories,
   updateCategory,
 } from "../controllers/categoryController.js";
@@ -20,6 +21,9 @@ router
     createCategoty
   );
 
-router.route("/:id").put(updateCategory);
+router
+  .route("/:id")
+  .put(updateCategory)
+  .delete(authenticate, isAdmin, deleteCategory);
 
 export default router;
