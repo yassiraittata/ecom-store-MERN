@@ -9,12 +9,13 @@ import PrivetRoute from "./components/PrivetRoute";
 import Profile from "./pages/User/Profile";
 import AdminRoutes from "./components/AdminRoutes";
 import UsersList from "./pages/Admin/usersList";
+import CategoryList from "./pages/Admin/CategoryList";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    children: [ 
+    children: [
       {
         path: "/login",
         element: <Login />,
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <PrivetRoute />,
         children: [
-          { 
+          {
             path: "/profile",
             element: <Profile />,
           },
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: <UsersList />,
+          },
+          {
+            path: "categories",
+            element: <CategoryList />,
           },
         ],
       },
