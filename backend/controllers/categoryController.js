@@ -37,3 +37,25 @@ export const createCategoty = asyncHandler(async (req, res) => {
     category,
   });
 });
+
+export const updateCategory = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const category = await Category.findById(id);
+
+  if (!category) {
+    res.status(404);
+    throw new Error("Category was not found!");
+  }
+
+  category.name = name;
+
+  await category.save();
+
+  res.status(201).json({
+    message: "Category updated successfully",
+    status: res.statusCode,
+    category,
+  });
+});

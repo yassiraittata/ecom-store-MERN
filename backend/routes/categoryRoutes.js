@@ -5,6 +5,7 @@ import { authenticate, isAdmin } from "../middlewares/authentication.js";
 import {
   createCategoty,
   getAllCategories,
+  updateCategory,
 } from "../controllers/categoryController.js";
 
 const router = express.Router();
@@ -18,5 +19,7 @@ router
     isAdmin,
     createCategoty
   );
+
+router.route("/:id").put(updateCategory);
 
 export default router;
