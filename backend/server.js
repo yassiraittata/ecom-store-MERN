@@ -6,6 +6,7 @@ import { connectDB } from "./config/db.js";
 
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 import errorHandler from "./middlewares/errorHandler.js";
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/product", productRoutes);
 
 app.use(errorHandler);
 
