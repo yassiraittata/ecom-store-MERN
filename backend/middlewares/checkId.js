@@ -1,6 +1,6 @@
-const { isValidObjectId } = require("mongoose");
+import { isValidObjectId } from "mongoose";
 
-function checkId(req, res, next) {
+export function checkId(req, res, next) {
   const { id } = req.params;
   if (!isValidObjectId(id)) {
     res.status(400);
@@ -9,5 +9,3 @@ function checkId(req, res, next) {
 
   next();
 }
-
-module.exports = checkId;
