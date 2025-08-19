@@ -10,7 +10,8 @@ export const createProduct = asyncHandler(async (req, res) => {
     throw new Error("Please enter valid data!");
   }
 
-  const { name, price, category, description } = matchedData(req);
+  const { name, price, category, description, quantity, brand } =
+    matchedData(req);
 
   const existedProduct = await Product.findOne({ name });
 
@@ -24,6 +25,8 @@ export const createProduct = asyncHandler(async (req, res) => {
     price,
     category,
     description,
+    quantity,
+    brand,
   });
 
   await product.save();
