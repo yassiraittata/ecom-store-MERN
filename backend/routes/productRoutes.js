@@ -5,16 +5,18 @@ import { body } from "express-validator";
 import { authenticate, isAdmin } from "../middlewares/authentication.js";
 import { checkId } from "../middlewares/checkId.js";
 
-const routes = express.Router();
+const router = express.Router();
 
 import {
   createProduct,
   deleteProduct,
   getAllProducts,
   updateProduct,
+  fetchAllProducts,
+  addProductReview,
 } from "../controllers/productController.js";
 
-routes
+router
   .route("/")
   .get(getAllProducts)
   .post(
@@ -39,7 +41,9 @@ routes
     createProduct
   );
 
-routes
+router.route("/all").get(fetchAllProducts);
+
+router
   .route("/:id")
   .put(
     authenticate,
@@ -64,4 +68,6 @@ routes
   )
   .delete(authenticate, isAdmin, checkId, deleteProduct);
 
-export default routes;
+router.route("/:id/reviews").post(authenticate, isAdmin, addProductReview);
+
+export default router;

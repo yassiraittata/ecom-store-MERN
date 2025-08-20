@@ -136,3 +136,51 @@ export const getAllProducts = asyncHandler(async (req, res) => {
     hasMore: false,
   });
 });
+
+export const fetchAllProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).populate("category");
+
+  res.status(200).json({
+    status: res.statusCode,
+    products,
+  });
+});
+
+export const addProductReview = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { rating, comment } = req.body;
+
+  const product = await Product.findById(id);
+  if (!product) {
+    res.status(404);
+    throw new Error("Product not found!");
+  }
+
+  const existedReview = product.reviews.find(
+    (r) => r.user.toString() === req.user._id.toString()
+  );
+
+  if (existedReview) {
+    res.status(400);
+    throw new Error("You have already reviewed this product!");
+  }
+
+  const review = {
+    user: req.user._id,
+    name: req.user.username,
+    rating: Number(rating),
+    comment,
+  };
+
+  product.reviews.push(review);
+  product.numReviews = product.reviews.length;
+  product.rating =
+    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    product.reviews.length;
+  await product.save();
+  res.status(201).json({
+    message: "Review added successfully",
+    status: res.statusCode,
+    review,
+  });
+});
