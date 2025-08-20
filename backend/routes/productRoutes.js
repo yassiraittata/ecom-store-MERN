@@ -14,6 +14,7 @@ import {
   updateProduct,
   fetchAllProducts,
   addProductReview,
+  fetchTopProducts,
 } from "../controllers/productController.js";
 
 router
@@ -42,6 +43,7 @@ router
   );
 
 router.route("/all").get(fetchAllProducts);
+router.route("/top").get(fetchTopProducts);
 
 router
   .route("/:id")

@@ -178,9 +178,19 @@ export const addProductReview = asyncHandler(async (req, res) => {
     product.reviews.reduce((acc, item) => item.rating + acc, 0) /
     product.reviews.length;
   await product.save();
+
   res.status(201).json({
     message: "Review added successfully",
     status: res.statusCode,
     review,
+  });
+});
+
+export const fetchTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(5);
+
+  res.status(200).json({
+    status: res.statusCode,
+    products,
   });
 });
