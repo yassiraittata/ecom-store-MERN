@@ -10,11 +10,13 @@ const routes = express.Router();
 import {
   createProduct,
   deleteProduct,
+  getAllProducts,
   updateProduct,
 } from "../controllers/productController.js";
 
 routes
   .route("/")
+  .get(getAllProducts)
   .post(
     authenticate,
     isAdmin,

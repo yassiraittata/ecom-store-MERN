@@ -112,9 +112,27 @@ export const getProductById = asyncHandler(async (req, res) => {
 
 export const getAllProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({});
+
+  const pageSize = 6;
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+  products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (Number(req.query.page) || 0));
+
   res.status(200).json({
-    message: "Products retrieved successfully",
     status: res.statusCode,
     products,
+    page: 1,
+    pages: Math.ceil(count / pageSize),
+    hasMore: false,
   });
 });
