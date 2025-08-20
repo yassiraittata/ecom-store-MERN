@@ -19,6 +19,7 @@ export default (err, req, res, next) => {
         status: statusCode,
         // stackTrace: err.stack,
       });
+      break;
     case constants.UNAUTHORIZED:
       res.json({
         title: "Unauthorized",
@@ -26,6 +27,7 @@ export default (err, req, res, next) => {
         status: statusCode,
         // stackTrace: err.stack,
       });
+      break;
     case constants.FORBIDDEN:
       res.json({
         title: "Forbidden",
@@ -33,6 +35,7 @@ export default (err, req, res, next) => {
         status: statusCode,
         // stackTrace: err.stack,
       });
+      break;
     case constants.SERVER_ERROR:
       res.json({
         title: "Server Error",
@@ -40,8 +43,15 @@ export default (err, req, res, next) => {
         status: statusCode,
         // stackTrace: err.stack,
       });
+      break;
     default:
       console.log("No Error, All good !");
+      res.json({
+        title: "No Error",
+        message: err.message,
+        status: statusCode,
+        // stackTrace: err.stack
+      });
       break;
   }
 };

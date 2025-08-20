@@ -3,7 +3,7 @@ import { matchedData, validationResult } from "express-validator";
 import Product from "../models/productModel.js";
 
 export const createProduct = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
+  // const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     return res.status(400).json({
