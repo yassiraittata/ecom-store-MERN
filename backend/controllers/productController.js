@@ -94,3 +94,27 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     status: res.statusCode,
   });
 });
+
+export const getProductById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const product = await Product.findById(id);
+  if (!product) {
+    res.status(404);
+    throw new Error("Product not found!");
+  }
+  res.status(200).json({
+    message: "Product retrieved successfully",
+    status: res.statusCode,
+    product,
+  });
+});
+
+export const getAllProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({});
+  res.status(200).json({
+    message: "Products retrieved successfully",
+    status: res.statusCode,
+    products,
+  });
+});
