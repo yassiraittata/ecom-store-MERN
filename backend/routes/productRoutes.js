@@ -9,6 +9,7 @@ const routes = express.Router();
 
 import {
   createProduct,
+  deleteProduct,
   updateProduct,
 } from "../controllers/productController.js";
 
@@ -58,6 +59,7 @@ routes
         .withMessage("Description must be a string"),
     ],
     updateProduct
-  );
+  )
+  .delete(authenticate, isAdmin, checkId, deleteProduct);
 
 export default routes;
